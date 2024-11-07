@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { onSnapshot, doc } from "firebase/firestore";
 import { firestore } from "firebase.config";
+import "tailwindcss/tailwind.css";
 
 export default function Test(props) {
   const [points, setPoints] = useState({});
@@ -18,8 +19,8 @@ export default function Test(props) {
   }, []);
 
   return (
-    <div>
-      <p>Team1: {points.team0}</p>
+    <div class="w-full h-screen flex flex-col justify-center text-center bg-gradient-to-tr from-primary-900 to-primary-500">
+      <h1 class="text-8xl font-semibold text-white">{points.team1}</h1>
     </div>
   );
 }

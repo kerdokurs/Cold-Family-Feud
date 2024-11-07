@@ -865,6 +865,18 @@ export default function Admin(props) {
             </div>
             <hr />
 
+            <button
+              className="border-4 rounded p-10 flex-grow text-2xl bg-secondary-300 text-foreground"
+              onClick={async () => {
+                await updatePoints({
+                  team0: 0,
+                  team1: 0,
+                });
+              }}
+            >
+              {t("Reset Points")}
+            </button>
+
             {/* IS NOT THE FINAL ROUND */}
             {!game.is_final_round ? (
               // GAME BOARD CONTROLS

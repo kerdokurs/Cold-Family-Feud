@@ -1,4 +1,24 @@
+import { database } from "firebase.config";
+import { ref, onValue } from "firebase/database";
+import { useState } from "react";
+
 export default function TeamName(props) {
+  const [isPressed, setIsPressed] = useState(false);
+
+  useState(() => {
+    const { team } = props;
+    console.log("init pressed for team", team);
+    const pressedRef = ref(database, `rooside_soda/button/pressed/${team}`);
+    const unsubscribe = onValue(pressedRef, (snap) => {
+      const pressed = snap.val();
+      setIsPressed(pressed);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <div
       className="text-3xl flex flex-col text-center space-y-2"
@@ -6,7 +26,9 @@ export default function TeamName(props) {
         minWidth: 0,
       }}
     >
-      <div className="bg-gradient-to-tr from-primary-900 to-primary-500">
+      <div
+        className={`${!isPressed ? "bg-gradient-to-tr from-primary-900 to-primary-500" : "bg-red-700"}`}
+      >
         <p
           className="p-5 uppercase text-white"
           style={{
@@ -25,7 +47,7 @@ export default function TeamName(props) {
         {Array(props.game.teams[props.team].mistakes).fill(
           <div className="flex-shrink">
             <img src="x.png" />
-          </div>
+          </div>,
         )}
       </div>
     </div>
